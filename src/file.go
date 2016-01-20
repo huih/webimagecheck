@@ -1,16 +1,10 @@
 package main
 import (
 	"os"
-	"github.com/gotools/logs"
 )
 
-func WriteFile(fileName string, data []byte) error {
-	err := os.Remove(fileName)
-	if err != nil {
-		logs.Debug(err.Error())
-	}
-	
-	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDWR |os.O_TRUNC, os.ModePerm|os.ModeTemporary)
+func WriteFile(fileName string, data []byte) error {	
+	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDWR |os.O_APPEND, os.ModePerm|os.ModeTemporary)
 	if err != nil {
 		return err
 	}
