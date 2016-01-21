@@ -84,6 +84,12 @@ func CheckImage (){
 			checkState.ImageBad = checkState.ImageBad + 1
 			data := "page:" + tipr.PageUrl + " image:" + tipr.ImageUrl + "\n"
 			WriteFile("bad.txt", []byte(data))
+			
+			data = tipr.ImageUrl + "\n"
+			WriteFile("badimage.txt", []byte(data))
+			
+			data = tipr.PageUrl + "\n"
+			WriteFile("page.txt", []byte(data))
 		} else {
 			checkState.ImageOk = checkState.ImageOk + 1
 		}

@@ -38,7 +38,7 @@ func FindImagePathUseGoQuery(url string) []string {
 //http://zhiliaoyuan-zhiliao.stor.sinaapp.com/uploads/2016/01/20160117180444_86670.gif
 func ImageCanShow(imageUrl string) (bool, error) {
 	
-	var UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1541.0 Safari/537.36"
+	var UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36"
 	req, _ := http.NewRequest("GET", imageUrl, nil)
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Host", "zhiliaoyuan-zhiliao.stor.sinaapp.com")
