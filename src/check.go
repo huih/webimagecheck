@@ -11,6 +11,8 @@ var PageImageStop = false
 
 var finished chan bool
 
+var pageRepeat map[string]int
+
 type ImagePageRel struct {
 	PageUrl string
 	ImageUrl string
@@ -55,6 +57,15 @@ func GetPageImageUrl() {
 	PageImageStop = true
 }
 
+func IsRepeatPage(pageUrl string) bool {
+	if _, ok := pageRepeat[pageUrl]; ok {
+		return true
+	} else {
+		pageRepeat[pageUrl] = 1;
+		return false
+	}
+}
+
 func CheckImage (){
 	for {
 		if PageImageStop && ImageUrlList.Length() <= 0 {
@@ -88,8 +99,10 @@ func CheckImage (){
 			data = tipr.ImageUrl + "\n"
 			WriteFile("badimage.txt", []byte(data))
 			
-			data = tipr.PageUrl + "\n"
-			WriteFile("page.txt", []byte(data))
+			if false == IsRepeatPage(tipr.PageUrl) {
+				data = tipr.PageUrl + "\n"
+				WriteFile("page.txt", []byte(data))
+			}
 		} else {
 			checkState.ImageOk = checkState.ImageOk + 1
 		}
@@ -105,7 +118,11 @@ func PrintStatistics(interval time.Duration) {
 		time.Sleep(interval * time.Second)
 	}
 }
+
 func main(){
+	
+	//create remove repeat map
+	pageRepeat = make(map[string]int)
 	
 	//start parse pages
 	go GetPages("http://www.zhiliaoyuan.com")
