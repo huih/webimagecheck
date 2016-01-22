@@ -51,3 +51,14 @@ func GetPages(hostUrl string) {
 	}
 	PageStop = true
 }
+
+//read page url from file
+func GetPagesFromFile(fileName string) {
+	dataList,_ := ReadFile(fileName)
+	for _, data := range dataList {
+		if len(data) > 0 {
+			PageUrlList.Add(data)
+		}
+	}
+	PageStop = true
+}

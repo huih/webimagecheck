@@ -113,6 +113,10 @@ func CheckImage (){
 
 func PrintStatistics(interval time.Duration) {
 	for {
+		if PageImageStop && ImageUrlList.Length() <= 0 {
+			break
+		}
+		
 		logs.Debug("checkPages: %d, checkImages: %d, checkFail: %d, imageOk: %d, imageBad: %d, pageListsize: %d, imageListSize: %d", 
 			checkState.CheckPage, checkState.CheckImage, checkState.CheckFail, checkState.ImageOk, checkState.ImageBad, PageUrlList.Length(), ImageUrlList.Length())
 		time.Sleep(interval * time.Second)
@@ -120,12 +124,14 @@ func PrintStatistics(interval time.Duration) {
 }
 
 func main(){
-	
 	//create remove repeat map
 	pageRepeat = make(map[string]int)
+	finished = make(chan bool)
+	
 	
 	//start parse pages
-	go GetPages("http://www.zhiliaoyuan.com")
+	//go GetPages("http://www.zhiliaoyuan.com")
+	GetPagesFromFile("page_input.txt")
 	
 	//start get image url
 	go GetPageImageUrl()
@@ -136,7 +142,8 @@ func main(){
 	//start statistics
 	go PrintStatistics(5)
 	
-	
 	<- finished
+	
+	logs.Debug("finished check image ...")
 }
 
